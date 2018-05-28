@@ -1,4 +1,4 @@
-module Eth
+module MoacEth
   class Gas
 
     GTXCOST = 21000       # TX BASE GAS COST

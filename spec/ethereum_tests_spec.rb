@@ -13,7 +13,7 @@ describe "Ethereum common tests" do
       JSON.parse(File.read file_path).each do |name, json|
         next unless json_tx = json['transaction']
 
-        tx = Eth::Tx.decode json['rlp']
+        tx = MoacEth::Tx.decode json['rlp']
 
         expect(tx.from.downcase).to eq "0x#{json['sender']}"
         expect(tx.v).to eq json_tx['v'].to_i(16)

@@ -1,4 +1,4 @@
-module Eth
+module MoacEth
   class Address
 
     def initialize(address)

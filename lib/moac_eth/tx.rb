@@ -1,5 +1,5 @@
-module Eth
-  class MoacTx
+module MoacEth
+  class Tx
 
     include RLP::Sedes::Serializable
     extend Sedes
@@ -27,14 +27,8 @@ module Eth
     end
 
     def initialize(params)
-      # Moac chain
-      # Network ID for Testnet is 101
-      # Network ID for Mainnet is 99
-      Eth.configure do |config|
-        config.chain_id = 101
-      end
 
-      fields = params.merge({v: Eth.chain_id, r: 0, s: 0})
+      fields = params.merge({v: MoacEth.chain_id, r: 0, s: 0})
       fields[:to] = Utils.normalize_address(fields[:to])
 
       if params[:data]
@@ -109,11 +103,11 @@ module Eth
     end
 
     def data
-      Eth.tx_data_hex? ? data_hex : data_bin
+      MoacEth.tx_data_hex? ? data_hex : data_bin
     end
 
     def data=(string)
-      Eth.tx_data_hex? ? self.data_hex=(string) : self.data_bin=(string)
+      MoacEth.tx_data_hex? ? self.data_hex=(string) : self.data_bin=(string)
     end
 
 
@@ -147,18 +141,18 @@ module Eth
     end
 
     def unsigned
-      MoacTx.new to_h.merge(v: Eth.chain_id, r: 0, s: 0)
+      Tx.new to_h.merge(v: MoacEth.chain_id, r: 0, s: 0)
     end
 
     def sedes
-      if Eth.prevent_replays? && !(Eth.replayable_v? v)
+      if MoacEth.prevent_replays? && !(MoacEth.replayable_v? v)
         self.class
       else
-        UnsignedMoacTx
+        UnsignedTx
       end
     end
 
   end
 
-  UnsignedMoacTx = MoacTx.exclude([:v, :r, :s])
+  UnsignedTx = Tx.exclude([:v, :r, :s])
 end

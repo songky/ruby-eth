@@ -1,4 +1,4 @@
-module Eth
+module MoacEth
   module Sedes
     include RLP::Sedes
 

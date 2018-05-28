@@ -1,8 +1,8 @@
 require 'json'
 require 'securerandom'
 
-class Eth::Key::Encrypter
-  include Eth::Utils
+class MoacEth::Key::Encrypter
+  include MoacEth::Utils
 
   def self.perform(key, password, options = {})
     new(key, options).perform(password)
@@ -122,7 +122,7 @@ class Eth::Key::Encrypter
   end
 
   def address
-    Eth::Key.new(priv: key).address
+    MoacEth::Key.new(priv: key).address
   end
 
 end

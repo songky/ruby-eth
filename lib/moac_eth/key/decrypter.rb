@@ -1,8 +1,8 @@
 require 'json'
 require 'scrypt'
 
-class Eth::Key::Decrypter
-  include Eth::Utils
+class MoacEth::Key::Decrypter
+  include MoacEth::Utils
 
   def self.perform(data, password)
     new(data, password).perform

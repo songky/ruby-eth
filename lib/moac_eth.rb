@@ -3,19 +3,18 @@ require 'ffi'
 require 'money-tree'
 require 'rlp'
 
-module Eth
+module MoacEth
   BYTE_ZERO = "\x00".freeze
   UINT_MAX = 2**256 - 1
 
-  autoload :Address, 'eth/address'
-  autoload :Gas, 'eth/gas'
-  autoload :Key, 'eth/key'
-  autoload :OpenSsl, 'eth/open_ssl'
-  autoload :Secp256k1, 'eth/secp256k1'
-  autoload :Sedes, 'eth/sedes'
-  autoload :Tx, 'eth/tx'
-  autoload :MoacTx, 'eth/moac_tx'
-  autoload :Utils, 'eth/utils'
+  autoload :Address, 'moac_eth/address'
+  autoload :Gas, 'moac_eth/gas'
+  autoload :Key, 'moac_eth/key'
+  autoload :OpenSsl, 'moac_eth/open_ssl'
+  autoload :Secp256k1, 'moac_eth/secp256k1'
+  autoload :Sedes, 'moac_eth/sedes'
+  autoload :Tx, 'moac_eth/tx'
+  autoload :Utils, 'moac_eth/utils'
 
   class << self
     def configure
@@ -63,6 +62,11 @@ module Eth
 
     def initialize
       self.tx_data_hex = true
+
+      # Moac chain
+      # Network ID for Testnet is 101
+      # Network ID for Mainnet is 99
+      self.chain_id    = 101
     end
   end
 

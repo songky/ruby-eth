@@ -1,4 +1,6 @@
-# Eth [![Travis-CI](https://travis-ci.org/se3000/ruby-eth.svg?branch=master)](https://travis-ci.org/se3000/ruby-eth) [![Code Climate](https://codeclimate.com/github/se3000/ruby-eth/badges/gpa.svg)](https://codeclimate.com/github/se3000/ruby-eth) [![Gitter](https://badges.gitter.im/ruby-eth/Lobby.svg)](https://gitter.im/ruby-eth/Lobby)
+# MoacEth [![Travis-CI](https://travis-ci.org/se3000/ruby-eth.svg?branch=master)](https://travis-ci.org/se3000/ruby-eth) [![Code Climate](https://codeclimate.com/github/se3000/ruby-eth/badges/gpa.svg)](https://codeclimate.com/github/se3000/ruby-eth) [![Gitter](https://badges.gitter.im/ruby-eth/Lobby.svg)](https://gitter.im/ruby-eth/Lobby)
+
+Fork from [ruby-eth](https://github.com/se3000/ruby-eth)
 
 A simple library to build and sign Ethereum transactions. Allows separation of key and node management. Sign transactions and handle keys anywhere you can run ruby, broadcast transactions through any node.
 
@@ -7,7 +9,7 @@ A simple library to build and sign Ethereum transactions. Allows separation of k
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'eth'
+gem 'moac_eth'
 ```
 
 And then execute:
@@ -16,7 +18,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install eth
+    $ gem install moac_eth
 
 ## Usage
 
@@ -25,7 +27,7 @@ Or install it yourself as:
 Create a new public/private key and get its address:
 
 ```ruby
-key = Eth::Key.new
+key = MoacEth::Key.new
 key.private_hex
 key.public_hex
 key.address # EIP55 checksummed address
@@ -34,19 +36,19 @@ key.address # EIP55 checksummed address
 Import an existing key:
 
 ```ruby
-old_key = Eth::Key.new priv: private_key
+old_key = MoacEth::Key.new priv: private_key
 ```
 
 Or decrypt an [encrypted key](https://github.com/ethereum/wiki/wiki/Web3-Secret-Storage-Definition):
 
 ```ruby
-decrypted_key = Eth::Key.decrypt File.read('./some/path.json'), 'p455w0rD'
+decrypted_key = MoacEth::Key.decrypt File.read('./some/path.json'), 'p455w0rD'
 ```
 
 You can also encrypt your keys for use with other ethereum libraries:
 
 ```ruby
-encrypted_key_info = Eth::Key.encrypt key, 'p455w0rD'
+encrypted_key_info = MoacEth::Key.encrypt key, 'p455w0rD'
 ```
 
 ### Transactions
@@ -54,7 +56,7 @@ encrypted_key_info = Eth::Key.encrypt key, 'p455w0rD'
 Build a transaction from scratch:
 
 ```ruby
-tx = Eth::Tx.new({
+tx = MoacEth::Tx.new({
   data: hex_data,
   gas_limit: 21_000,
   gas_price: 3_141_592,
@@ -67,7 +69,7 @@ tx = Eth::Tx.new({
 Or decode an encoded raw transaction:
 
 ```ruby
-tx = Eth::Tx.decode hex
+tx = MoacEth::Tx.decode hex
 ```
 
 Then sign the transaction:
@@ -83,13 +85,13 @@ Get the raw transaction with `tx.hex`, and broadcast it through any Ethereum nod
 Validate an [EIP55](https://github.com/ethereum/EIPs/issues/55) checksummed address:
 
 ```ruby
-Eth::Utils.valid_address? address
+MoacEth::Utils.valid_address? address
 ```
 
 Or add a checksum to an existing address:
 
 ```ruby
-Eth::Utils.format_address "0x4bc787699093f11316e819b5692be04a712c4e69" # => "0x4bc787699093f11316e819B5692be04A712C4E69"
+MoacEth::Utils.format_address "0x4bc787699093f11316e819b5692be04a712c4e69" # => "0x4bc787699093f11316e819B5692be04A712C4E69"
 ```
 
 ### Configure
@@ -97,7 +99,7 @@ Eth::Utils.format_address "0x4bc787699093f11316e819b5692be04a712c4e69" # => "0x4
 In order to prevent replay attacks, you must specify which Ethereum chain your transactions are created for. See [EIP 155](https://github.com/ethereum/EIPs/issues/155) for more detail.
 
 ```ruby
-Eth.configure do |config|
+MoacEth.configure do |config|
   config.chain_id = 1 # nil by default, meaning valid on any chain
 end
 ```

@@ -1,4 +1,4 @@
-describe Eth::Address do
+describe MoacEth::Address do
   describe "#valid?" do
     context "given an address with a valid checksum" do
       let(:addresses) do
@@ -12,7 +12,7 @@ describe Eth::Address do
 
       it "returns true" do
         addresses.each do |address|
-          expect(Eth::Address.new address).to be_valid
+          expect(MoacEth::Address.new address).to be_valid
         end
       end
     end
@@ -29,7 +29,7 @@ describe Eth::Address do
 
       it "returns false" do
         addresses.each do |address|
-          expect(Eth::Address.new address).not_to be_valid
+          expect(MoacEth::Address.new address).not_to be_valid
         end
       end
     end
@@ -49,7 +49,7 @@ describe Eth::Address do
 
       it "returns true" do
         addresses.each do |address|
-          expect(Eth::Address.new address).to be_valid
+          expect(MoacEth::Address.new address).to be_valid
         end
       end
     end
@@ -69,7 +69,7 @@ describe Eth::Address do
 
       it "returns true" do
         addresses.each do |address|
-          expect(Eth::Address.new address).to be_valid
+          expect(MoacEth::Address.new address).to be_valid
         end
       end
     end
@@ -86,7 +86,7 @@ describe Eth::Address do
 
       it "returns true" do
         addresses.each do |address|
-          expect(Eth::Address.new address).not_to be_valid
+          expect(MoacEth::Address.new address).not_to be_valid
         end
       end
     end
@@ -115,7 +115,7 @@ describe Eth::Address do
 
     it "follows EIP55 standard" do
       addresses.each do |plain, checksummed|
-        address = Eth::Address.new(plain)
+        address = MoacEth::Address.new(plain)
         expect(address.checksummed).to eq checksummed
       end
     end
@@ -125,7 +125,7 @@ describe Eth::Address do
 
       it "raises an error" do
         expect {
-          Eth::Address.new(bad).checksummed
+          MoacEth::Address.new(bad).checksummed
         }.to raise_error "Invalid address: #{bad}"
       end
     end

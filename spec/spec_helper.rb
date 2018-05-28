@@ -1,5 +1,5 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'eth'
+require 'moac_eth'
 require 'securerandom'
 
 module Helpers
@@ -17,20 +17,20 @@ module Helpers
   end
 
   def configure_defaults
-    Eth.configure do |config|
+    MoacEth.configure do |config|
       config.chain_id = nil
       config.tx_data_hex = true
     end
   end
 
   def configure_chain_id(id)
-    Eth.configure do |config|
+    MoacEth.configure do |config|
       config.chain_id = id
     end
   end
 
   def configure_tx_data_hex(using_hex = true)
-    Eth.configure do |config|
+    MoacEth.configure do |config|
       config.tx_data_hex = using_hex
     end
   end
