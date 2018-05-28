@@ -1,20 +1,23 @@
 module Eth
-  class Tx
+  class MoacTx
 
     include RLP::Sedes::Serializable
     extend Sedes
 
     set_serializable_fields({
-      nonce: big_endian_int,
-      gas_price: big_endian_int,
-      gas_limit: big_endian_int,
-      to: address,
-      value: big_endian_int,
-      data_bin: binary,
-      v: big_endian_int,
-      r: big_endian_int,
-      s: big_endian_int
-    })
+                                nonce: big_endian_int,
+                                systemContract: big_endian_int,
+                                gas_price: big_endian_int,
+                                gas_limit: big_endian_int,
+                                to: address,
+                                value: big_endian_int,
+                                data_bin: binary,
+                                shardingFlag: big_endian_int,
+                                via: binary,
+                                v: big_endian_int,
+                                r: big_endian_int,
+                                s: big_endian_int
+                            })
 
     attr_writer :signature
 
@@ -24,10 +27,14 @@ module Eth
     end
 
     def initialize(params)
+      # Moac chain
+      # Network ID for Testnet is 101
+      # Network ID for Mainnet is 99
       Eth.configure do |config|
-        config.chain_id = nil
+        config.chain_id = 101
       end
-      fields = {v: 0, r: 0, s: 0}.merge params
+
+      fields = params.merge({v: Eth.chain_id, r: 0, s: 0})
       fields[:to] = Utils.normalize_address(fields[:to])
 
       if params[:data]
@@ -140,18 +147,18 @@ module Eth
     end
 
     def unsigned
-      Tx.new to_h.merge(v: Eth.chain_id, r: 0, s: 0)
+      MoacTx.new to_h.merge(v: Eth.chain_id, r: 0, s: 0)
     end
 
     def sedes
       if Eth.prevent_replays? && !(Eth.replayable_v? v)
         self.class
       else
-        UnsignedTx
+        UnsignedMoacTx
       end
     end
 
   end
 
-  UnsignedTx = Tx.exclude([:v, :r, :s])
+  UnsignedMoacTx = MoacTx.exclude([:v, :r, :s])
 end

@@ -14,6 +14,7 @@ module Eth
   autoload :Secp256k1, 'eth/secp256k1'
   autoload :Sedes, 'eth/sedes'
   autoload :Tx, 'eth/tx'
+  autoload :MoacTx, 'eth/moac_tx'
   autoload :Utils, 'eth/utils'
 
   class << self
