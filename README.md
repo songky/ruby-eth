@@ -1,6 +1,6 @@
 # MoacEth [![Travis-CI](https://travis-ci.org/se3000/ruby-eth.svg?branch=master)](https://travis-ci.org/se3000/ruby-eth) [![Code Climate](https://codeclimate.com/github/se3000/ruby-eth/badges/gpa.svg)](https://codeclimate.com/github/se3000/ruby-eth) [![Gitter](https://badges.gitter.im/ruby-eth/Lobby.svg)](https://gitter.im/ruby-eth/Lobby)
 
-Fork from [ruby-eth](https://github.com/se3000/ruby-eth)
+Forking from [ruby-eth](https://github.com/se3000/ruby-eth), I'll really have to thank him.
 
 A simple library to build and sign Ethereum transactions. Allows separation of key and node management. Sign transactions and handle keys anywhere you can run ruby, broadcast transactions through any node.
 

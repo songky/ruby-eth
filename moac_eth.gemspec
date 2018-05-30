@@ -6,12 +6,12 @@ require 'moac_eth/version'
 Gem::Specification.new do |spec|
   spec.name          = "moac_eth"
   spec.version       = MoacEth::VERSION
-  spec.authors       = ["Steve Ellis"]
-  spec.email         = ["email@steveell.is"]
+  spec.authors       = ["Kwin Song"]
+  spec.email         = ["songkuoyin@gmail.com"]
 
   spec.summary       = %q{Simple API to sign Ethereum transactions.}
   spec.description   = %q{Library to build, parse, and sign Ethereum transactions.}
-  spec.homepage      = "https://github.com/se3000/ruby-eth"
+  spec.homepage      = "https://github.com/songky/ruby-moac"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
