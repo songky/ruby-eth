@@ -66,7 +66,7 @@ module Moac
       # Moac chain
       # Network ID for Testnet is 101
       # Network ID for Mainnet is 99
-      self.chain_id    = 101
+      self.chain_id    = 99
     end
   end
 
