@@ -1,4 +1,4 @@
-describe MoacEth::Tx, type: :model do
+describe Moac::Tx, type: :model do
   let(:nonce) { rand 1_000_000 }
   let(:gas_price) { 10_000 }
   let(:gas_limit) { 100_000 }
@@ -10,7 +10,7 @@ describe MoacEth::Tx, type: :model do
   let(:s) { rand(1_000_000_000) }
   let(:options) { {} }
   let(:tx) do
-    MoacEth::Tx.new({
+    Moac::Tx.new({
       nonce: nonce,
       gas_price: gas_price,
       gas_limit: gas_limit,
@@ -40,15 +40,15 @@ describe MoacEth::Tx, type: :model do
       let(:gas_limit) { 20_000 }
 
       it "raises an InvalidTransaction error" do
-        expect { tx }.to raise_error(MoacEth::InvalidTransaction, "Gas limit too low")
+        expect { tx }.to raise_error(Moac::InvalidTransaction, "Gas limit too low")
       end
     end
 
     context "there are values beyond the unsigned integer max" do
-      let(:nonce) { MoacEth::UINT_MAX + 1 }
+      let(:nonce) { Moac::UINT_MAX + 1 }
 
       it "raises an InvalidTransaction error" do
-        expect { tx }.to raise_error(MoacEth::InvalidTransaction, "Values way too high!")
+        expect { tx }.to raise_error(Moac::InvalidTransaction, "Values way too high!")
       end
     end
 
@@ -63,16 +63,16 @@ describe MoacEth::Tx, type: :model do
   end
 
   describe ".decode" do
-    let(:key) { MoacEth::Key.new }
+    let(:key) { Moac::Key.new }
     let(:tx1) { tx.sign key }
 
     it "returns an instance that matches the original enocded one" do
-      tx2 = MoacEth::Tx.decode tx1.encoded
+      tx2 = Moac::Tx.decode tx1.encoded
       expect(tx2).to eq(tx1)
     end
 
     it "also accepts hex" do
-      tx2 = MoacEth::Tx.decode(tx1.hex)
+      tx2 = Moac::Tx.decode(tx1.hex)
       expect(tx2).to eq(tx1)
     end
   end
@@ -81,7 +81,7 @@ describe MoacEth::Tx, type: :model do
     let(:v) { nil }
     let(:r) { nil }
     let(:s) { nil }
-    let(:key) { MoacEth::Key.new }
+    let(:key) { Moac::Key.new }
 
     it "creates a recoverable signature for the transaction" do
       tx.sign key
@@ -91,7 +91,7 @@ describe MoacEth::Tx, type: :model do
   end
 
   describe "#to_h" do
-    let(:key) { MoacEth::Key.new }
+    let(:key) { Moac::Key.new }
 
     before { tx.sign key }
 
@@ -114,17 +114,17 @@ describe MoacEth::Tx, type: :model do
     end
 
     it "can be converted back into a transaction" do
-      tx2 = MoacEth::Tx.new(tx.to_h)
+      tx2 = Moac::Tx.new(tx.to_h)
       expect(tx2.data).to eq tx.data
       expect(tx2).to eq tx
     end
   end
 
   describe "#hex" do
-    let(:key) { MoacEth::Key.new }
+    let(:key) { Moac::Key.new }
 
     it "creates a hex representation" do
-      tx = MoacEth::Tx.new({
+      tx = Moac::Tx.new({
         data: 'abcdef',
         gas_limit: 3_141_592,
         gas_price: 20_000_000_000,
@@ -138,7 +138,7 @@ describe MoacEth::Tx, type: :model do
   end
 
   describe "#from" do
-    let(:key) { MoacEth::Key.new }
+    let(:key) { Moac::Key.new }
     subject { tx.from }
 
     context "when the signature is present" do
@@ -175,7 +175,7 @@ describe MoacEth::Tx, type: :model do
 
     it "hashes the serialized full transaction" do
       txids.each do |txid|
-        tx = MoacEth::Tx.decode read_hex_fixture(txid)
+        tx = Moac::Tx.decode read_hex_fixture(txid)
         expect(tx.hash).to eq(txid)
         expect(tx.id).to eq(txid)
       end
@@ -185,7 +185,7 @@ describe MoacEth::Tx, type: :model do
   describe "#data_hex" do
     it "converts the hex to binary and persists it" do
       hex = '0123456789abcdef'
-      binary = MoacEth::Utils.hex_to_bin hex
+      binary = Moac::Utils.hex_to_bin hex
 
       expect {
         tx.data_hex = hex
@@ -200,7 +200,7 @@ describe MoacEth::Tx, type: :model do
   describe "#data_bin" do
     it "returns the data in a binary format" do
       hex = '0123456789abcdef'
-      binary = MoacEth::Utils.hex_to_bin hex
+      binary = Moac::Utils.hex_to_bin hex
 
       expect {
         tx.data_bin = binary
@@ -216,7 +216,7 @@ describe MoacEth::Tx, type: :model do
     after { configure_tx_data_hex }
 
     let(:hex) { '0123456789abcdef' }
-    let(:binary) { MoacEth::Utils.hex_to_bin hex }
+    let(:binary) { Moac::Utils.hex_to_bin hex }
 
     context "when configured to use hex" do
       before { configure_tx_data_hex true }

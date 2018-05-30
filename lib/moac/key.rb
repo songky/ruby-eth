@@ -1,7 +1,7 @@
-module MoacEth
+module Moac
   class Key
-    autoload :Decrypter, 'moac_eth/key/decrypter'
-    autoload :Encrypter, 'moac_eth/key/encrypter'
+    autoload :Decrypter, 'moac/key/decrypter'
+    autoload :Encrypter, 'moac/key/encrypter'
 
     attr_reader :private_key, :public_key
 

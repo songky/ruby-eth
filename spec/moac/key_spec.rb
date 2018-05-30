@@ -1,19 +1,19 @@
-describe Eth::Key, type: :model do
+describe Moac::Key, type: :model do
   let(:priv) { nil }
-  subject(:key) { Eth::Key.new priv: priv }
+  subject(:key) { Moac::Key.new priv: priv }
 
   describe "#initialize" do
     it "returns a key with a new private key" do
-      key1 = Eth::Key.new
-      key2 = Eth::Key.new
+      key1 = Moac::Key.new
+      key2 = Moac::Key.new
 
       expect(key1.private_hex).not_to eq(key2.private_hex)
       expect(key1.public_hex).not_to eq(key2.public_hex)
     end
 
     it "regenerates an old private key" do
-      key1 = Eth::Key.new
-      key2 = Eth::Key.new priv: key1.private_hex
+      key1 = Moac::Key.new
+      key2 = Moac::Key.new priv: key1.private_hex
 
       expect(key1.private_hex).to eq(key2.private_hex)
       expect(key1.public_hex).to eq(key2.public_hex)
@@ -27,21 +27,21 @@ describe Eth::Key, type: :model do
       10.times do
         signature = key.sign message
         expect(key.verify_signature message, signature).to be_truthy
-        s_value = Eth::Utils.v_r_s_for(signature).last
-        expect(s_value).to be < (Eth::Secp256k1::N/2)
+        s_value = Moac::Utils.v_r_s_for(signature).last
+        expect(s_value).to be < (Moac::Secp256k1::N/2)
       end
     end
 
     context "when the network ID has been changed", chain_id: 42 do
       it "signs a message so that the public key is recoverable" do
-        v_base = Eth.v_base
+        v_base = Moac.v_base
         expect(v_base).to eq(119)
 
         10.times do
           signature = key.sign message
           expect(key.verify_signature message, signature).to be_truthy
-          v_val, r_val, s_val = Eth::Utils.v_r_s_for(signature)
-          expect(s_val).to be < (Eth::Secp256k1::N/2)
+          v_val, r_val, s_val = Moac::Utils.v_r_s_for(signature)
+          expect(s_val).to be < (Moac::Secp256k1::N/2)
           expect([v_base, v_base + 1]).to include(v_val)
         end
       end
@@ -78,13 +78,13 @@ describe Eth::Key, type: :model do
       let(:new_signature) { hex_to_bin '778bb9158ca2b1d64f97355839efef7564e8a960f2d8429c3001f3ecf6404fa0e83659a62ceb7f137d495d3f71dac967b6aab84ad3c06e50990df25c3caf202854' }
 
       it "can verify signatures from the new network" do
-        v = Eth::Utils.v_r_s_for(new_signature).first
+        v = Moac::Utils.v_r_s_for(new_signature).first
         expect([119, 120]).to include v
         expect(key.verify_signature message, new_signature).to be_truthy
       end
 
       it "can verify replayable signatures" do
-        v = Eth::Utils.v_r_s_for(signature).first
+        v = Moac::Utils.v_r_s_for(signature).first
         expect([27, 28]).to include v
         expect(key.verify_signature message, signature).to be_truthy
       end
@@ -108,11 +108,11 @@ describe Eth::Key, type: :model do
     # see: https://github.com/ethereum/wiki/wiki/Web3-Secret-Storage-Definition
 
     let(:password) { SecureRandom.base64 }
-    let(:key) { Eth::Key.new }
+    let(:key) { Moac::Key.new }
 
     it "reads and writes keys in the Ethereum Secret Storage definition" do
-      encrypted = Eth::Key.encrypt key, password
-      decrypted = Eth::Key.decrypt encrypted, password
+      encrypted = Moac::Key.encrypt key, password
+      decrypted = Moac::Key.decrypt encrypted, password
 
       expect(key.address).to eq(decrypted.address)
       expect(key.public_hex).to eq(decrypted.public_hex)

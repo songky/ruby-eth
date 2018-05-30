@@ -1,4 +1,4 @@
-module MoacEth
+module Moac
   module Utils
 
     extend self

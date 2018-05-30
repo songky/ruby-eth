@@ -1,4 +1,4 @@
-describe MoacEth::Key::Encrypter do
+describe Moac::Key::Encrypter do
 
   describe ".perform" do
     let(:password) { 'testpassword' }
@@ -15,7 +15,7 @@ describe MoacEth::Key::Encrypter do
     end
 
     it "recovers the key" do
-      result = MoacEth::Key::Encrypter.perform key, password, options
+      result = Moac::Key::Encrypter.perform key, password, options
       json = JSON.parse(result)
 
       expect(json['address']).to eq('0x008AeEda4D805471dF9b2A5B0f38A0C3bCBA786b')
@@ -40,7 +40,7 @@ describe MoacEth::Key::Encrypter do
       end
 
       it "recovers the key" do
-        result = MoacEth::Key::Encrypter.perform key, password, options
+        result = Moac::Key::Encrypter.perform key, password, options
         json = JSON.parse(result)
         expect(json['address']).to be_nil
         expect(json.keys).not_to include 'address'

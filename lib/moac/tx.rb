@@ -1,4 +1,4 @@
-module MoacEth
+module Moac
   class Tx
 
     include RLP::Sedes::Serializable
@@ -28,7 +28,7 @@ module MoacEth
 
     def initialize(params)
 
-      fields = params.merge({v: MoacEth.chain_id, r: 0, s: 0})
+      fields = params.merge({v: Moac.chain_id, r: 0, s: 0})
       fields[:to] = Utils.normalize_address(fields[:to])
 
       if params[:data]
@@ -103,11 +103,11 @@ module MoacEth
     end
 
     def data
-      MoacEth.tx_data_hex? ? data_hex : data_bin
+      Moac.tx_data_hex? ? data_hex : data_bin
     end
 
     def data=(string)
-      MoacEth.tx_data_hex? ? self.data_hex=(string) : self.data_bin=(string)
+      Moac.tx_data_hex? ? self.data_hex=(string) : self.data_bin=(string)
     end
 
 
@@ -141,11 +141,11 @@ module MoacEth
     end
 
     def unsigned
-      Tx.new to_h.merge(v: MoacEth.chain_id, r: 0, s: 0)
+      Tx.new to_h.merge(v: Moac.chain_id, r: 0, s: 0)
     end
 
     def sedes
-      if MoacEth.prevent_replays? && !(MoacEth.replayable_v? v)
+      if Moac.prevent_replays? && !(Moac.replayable_v? v)
         self.class
       else
         UnsignedTx

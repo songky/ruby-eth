@@ -3,18 +3,18 @@ require 'ffi'
 require 'money-tree'
 require 'rlp'
 
-module MoacEth
+module Moac
   BYTE_ZERO = "\x00".freeze
   UINT_MAX = 2**256 - 1
 
-  autoload :Address, 'moac_eth/address'
-  autoload :Gas, 'moac_eth/gas'
-  autoload :Key, 'moac_eth/key'
-  autoload :OpenSsl, 'moac_eth/open_ssl'
-  autoload :Secp256k1, 'moac_eth/secp256k1'
-  autoload :Sedes, 'moac_eth/sedes'
-  autoload :Tx, 'moac_eth/tx'
-  autoload :Utils, 'moac_eth/utils'
+  autoload :Address, 'moac/address'
+  autoload :Gas, 'moac/gas'
+  autoload :Key, 'moac/key'
+  autoload :OpenSsl, 'moac/open_ssl'
+  autoload :Secp256k1, 'moac/secp256k1'
+  autoload :Sedes, 'moac/sedes'
+  autoload :Tx, 'moac/tx'
+  autoload :Utils, 'moac/utils'
 
   class << self
     def configure

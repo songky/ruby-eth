@@ -1,4 +1,4 @@
-describe MoacEth::Address do
+describe Moac::Address do
   describe "#valid?" do
     context "given an address with a valid checksum" do
       let(:addresses) do
@@ -12,7 +12,7 @@ describe MoacEth::Address do
 
       it "returns true" do
         addresses.each do |address|
-          expect(MoacEth::Address.new address).to be_valid
+          expect(Moac::Address.new address).to be_valid
         end
       end
     end
@@ -29,7 +29,7 @@ describe MoacEth::Address do
 
       it "returns false" do
         addresses.each do |address|
-          expect(MoacEth::Address.new address).not_to be_valid
+          expect(Moac::Address.new address).not_to be_valid
         end
       end
     end
@@ -49,7 +49,7 @@ describe MoacEth::Address do
 
       it "returns true" do
         addresses.each do |address|
-          expect(MoacEth::Address.new address).to be_valid
+          expect(Moac::Address.new address).to be_valid
         end
       end
     end
@@ -69,7 +69,7 @@ describe MoacEth::Address do
 
       it "returns true" do
         addresses.each do |address|
-          expect(MoacEth::Address.new address).to be_valid
+          expect(Moac::Address.new address).to be_valid
         end
       end
     end
@@ -86,7 +86,7 @@ describe MoacEth::Address do
 
       it "returns true" do
         addresses.each do |address|
-          expect(MoacEth::Address.new address).not_to be_valid
+          expect(Moac::Address.new address).not_to be_valid
         end
       end
     end
@@ -115,7 +115,7 @@ describe MoacEth::Address do
 
     it "follows EIP55 standard" do
       addresses.each do |plain, checksummed|
-        address = MoacEth::Address.new(plain)
+        address = Moac::Address.new(plain)
         expect(address.checksummed).to eq checksummed
       end
     end
@@ -125,7 +125,7 @@ describe MoacEth::Address do
 
       it "raises an error" do
         expect {
-          MoacEth::Address.new(bad).checksummed
+          Moac::Address.new(bad).checksummed
         }.to raise_error "Invalid address: #{bad}"
       end
     end

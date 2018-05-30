@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'moac_eth/version'
+require 'moac/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "moac_eth"
-  spec.version       = MoacEth::VERSION
+  spec.name          = "moac"
+  spec.version       = Moac::VERSION
   spec.authors       = ["Kwin Song"]
   spec.email         = ["songkuoyin@gmail.com"]
 

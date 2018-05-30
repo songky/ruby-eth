@@ -1,7 +1,7 @@
 # originally lifted from https://github.com/lian/bitcoin-ruby
 # thanks to everyone there for figuring this out
 
-module MoacEth
+module Moac
   class OpenSsl
     extend FFI::Library
 
@@ -87,7 +87,7 @@ module MoacEth
 
         if signature.get_array_of_pointer(0, 2).all?{|i| BN_num_bits(i) <= 256 }
           4.times{|i|
-            head = [ MoacEth.v_base + i ].pack("C")
+            head = [ Moac.v_base + i ].pack("C")
             if public_key_hex == recover_public_key_from_signature(hash, [head, r, s].join, i, pubkey_compressed)
               rec_id = i; break
             end
@@ -157,7 +157,7 @@ module MoacEth
         return false if signature.bytesize != 65
 
         version = signature.unpack('C')[0]
-        v_base = MoacEth.replayable_v?(version) ? MoacEth.replayable_chain_id : MoacEth.v_base
+        v_base = Moac.replayable_v?(version) ? Moac.replayable_chain_id : Moac.v_base
         return false if version < v_base
 
         recover_public_key_from_signature(hash, signature, (version - v_base), false)
